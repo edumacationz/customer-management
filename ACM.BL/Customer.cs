@@ -13,7 +13,7 @@ namespace ACM.BL
       get;
       private set;
     }
-    public string email { get; set; }
+    public string Email { get; set; }
     private string _lastName;
     public string FirstName { get; set; }
 
@@ -49,5 +49,35 @@ namespace ACM.BL
     }
 
     public static int InstanceCount { get; set; }
+
+    public bool Validate() 
+    {
+      var isValid = true;
+
+
+    if(string.IsNullOrEmpty(LastName)) isValid = false;
+    if(string.IsNullOrWhiteSpace(Email)) isValid = false;
+
+      return isValid;
+    }
+
+    public Customer Retrieve(int customerId)
+    {
+
+      return new Customer();
+    }
+
+    public List<Customer> Retrieve()
+    {
+
+      return new List<Customer>();
+    }
+
+
+    public bool Save()
+    {
+
+      return true;
+    }
   }
 }
