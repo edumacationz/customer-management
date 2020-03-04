@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Acme.Common;
 
 namespace ACM.BL
 {
-  public class Customer
+  public class Customer : EntityBase, ILoggable
   {
+
+
+    public int Type { get; set; }
     public int CustomerId
     {
       get;
@@ -16,6 +20,8 @@ namespace ACM.BL
     public string Email { get; set; }
     private string _lastName;
     public string FirstName { get; set; }
+
+    public override string ToString() => FullName;
 
     public string LastName
     {
@@ -48,36 +54,33 @@ namespace ACM.BL
       }
     }
 
+    public string Log() =>
+    $"{CustomerId}: {FullName} Email: {Email} Status: {EntityState.ToString()}";
+
     public static int InstanceCount { get; set; }
 
-    public bool Validate() 
+    public List<Address> AddressList { get; set; }
+
+    public Customer() : this(0)
+    {
+
+    }
+
+    public Customer(int customerId)
+    {
+      CustomerId = customerId;
+      AddressList = new List<Address>();
+    }
+
+    public override bool Validate()
     {
       var isValid = true;
 
 
-    if(string.IsNullOrEmpty(LastName)) isValid = false;
-    if(string.IsNullOrWhiteSpace(Email)) isValid = false;
+      if (string.IsNullOrEmpty(LastName)) isValid = false;
+      if (string.IsNullOrWhiteSpace(Email)) isValid = false;
 
       return isValid;
-    }
-
-    public Customer Retrieve(int customerId)
-    {
-
-      return new Customer();
-    }
-
-    public List<Customer> Retrieve()
-    {
-
-      return new List<Customer>();
-    }
-
-
-    public bool Save()
-    {
-
-      return true;
     }
   }
 }
